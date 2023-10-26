@@ -2,7 +2,7 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 $(function () {
-  const currentHour = new Date().getHours(); //defines current hour
+  const currentHour = new Date().getHours();
   console.log(currentHour);
 
   const saveBtnEl = $(".saveBtn");
@@ -13,3 +13,15 @@ $(function () {
     localStorage.setItem(time, task);
   });
 });
+
+function updatedCurrentTime() {
+  let currentTime = dayjs();
+  let formattedTime = currentTime.format("h:mm A");
+  let formattedDate = currentTime.format("dddd, MMMM D, YYYY");
+  document.getElementById('currentTime').textContent = "Current Time: " + formattedTime;
+  document.getElementById('currentDay').textContent = "Date: " + formattedDate;
+}
+
+updatedCurrentTime();
+
+setInterval(updatedCurrentTime, 60000);
