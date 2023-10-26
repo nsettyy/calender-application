@@ -4,11 +4,12 @@
 $(function () {
   const currentHour = new Date().getHours(); //defines current hour
   console.log(currentHour);
-  const saveBtnEl = $(".saveBtn")
 
-  saveBtnEl.on("click", function(){ 
-    let time = $(this).parent().attr("id")
-    let task = $(this).siblings(".description").val()
-    localStorage.setItem(time, task); 
-  })
+  const saveBtnEl = $(".saveBtn");
+
+  saveBtnEl.on("click", function () {
+    let time = $(this).parent().attr("id");
+    let task = $(this).siblings(".description").val();
+    localStorage.setItem(time, task);
+  });
 });
