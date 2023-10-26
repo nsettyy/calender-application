@@ -1,20 +1,17 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
 $(function () {
-  const currentHour = new Date().getHours();
+  const currentHour = new Date().getHours(); 
   console.log(currentHour);
+  
+  const saveBtnEl = $(".saveBtn")
 
-  const saveBtnEl = $(".saveBtn");
+  saveBtnEl.on("click", function(){ 
+    let time = $(this).parent().attr("id")
+    let task = $(this).siblings(".description").val()
+    localStorage.setItem(time, task); 
+  })
+ 
 
-  saveBtnEl.on("click", function () {
-    let time = $(this).parent().attr("id");
-    let task = $(this).siblings(".description").val();
-    localStorage.setItem(time, task);
-  });
-});
-
-function updatedCurrentTime() {
+function updateCurrentTime() { 
   let currentTime = dayjs();
   let formattedTime = currentTime.format("h:mm A");
   let formattedDate = currentTime.format("dddd, MMMM D, YYYY");
@@ -22,6 +19,27 @@ function updatedCurrentTime() {
   document.getElementById('currentDay').textContent = "Date: " + formattedDate;
 }
 
-updatedCurrentTime();
+updateCurrentTime();
 
-setInterval(updatedCurrentTime, 60000);
+setInterval(updateCurrentTime, 60000); 
+  
+
+$(".time-block").each(function () { 
+  const blockHour = parseInt($(this).attr("id").split("-")[1]); 
+  if (blockHour < currentHour) {
+    $(this).addClass('past');
+   } else if (blockHour === currentHour) {
+    $(this).removeClass('past');
+    $(this).addClass('present');
+   } else {
+    $(this).removeClass('past');
+    $(this).removeClass('present');
+    $(this).addClass('future');
+   }
+  });
+
+
+  for (let i = 9; i < 17; i++){ 
+  $("#hour-" + i + " .description").val(localStorage.getItem("hour-" + i))}
+  
+});
