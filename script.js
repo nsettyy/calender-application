@@ -3,15 +3,17 @@ $(function () {
   var currentHour = new Date().getHours();
   console.log(currentHour);
 
-  //gets the save buttton class and 
+  //gets the save buttton class and makes it a variable
   var saveBtnEl = $(".saveBtn");
 
+  //adds event listener to the save button to save the data to local storage
   saveBtnEl.on("click", function () {
     var time = $(this).parent().attr("id");
     var task = $(this).siblings(".description").val();
     localStorage.setItem(time, task);
   });
 
+  //uses dayjs to display the current data and time on the top of the page and updates it every minute
   function updateCurrentTime() {
     var currentTime = dayjs();
     var formattedTime = currentTime.format("h:mm A");
@@ -21,11 +23,10 @@ $(function () {
     document.getElementById("currentDay").textContent =
       "Date: " + formattedDate;
   }
-
   updateCurrentTime();
-
   setInterval(updateCurrentTime, 60000);
 
+  //changes the time block colors based on past, present or future
   $(".time-block").each(function () {
     var blockHour = parseInt($(this).attr("id").split("-")[1]);
     if (blockHour < currentHour) {
@@ -40,6 +41,7 @@ $(function () {
     }
   });
 
+  //retrieves saved local storage data and keeps it on the page
   for (let i = 9; i < 17; i++) {
     $("#hour-" + i + " .description").val(localStorage.getItem("hour-" + i));
   }
