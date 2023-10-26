@@ -2,6 +2,6 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 $(function () {
-  const currentHour = new Date().getHours();
+  const currentHour = new Date().getHours(); //defines current hour
   console.log(currentHour);
-});
+})
